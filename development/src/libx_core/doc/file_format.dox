@@ -1,0 +1,795 @@
+//-----------------------------------------------------------------------------------------------------------
+/*
+ *	LibX - A Library to export/import .x-models
+ *
+ *	This file is
+ *		Copyright (C) 2008 Christian Oberholzer <coberholzer@gmx.ch>
+ *
+ *	It is part of LibX, which is
+ *		Copyright (C) 2008 Christian Oberholzer <coberholzer@gmx.ch>
+ *		Copyright (C) 2008 Basil Fierz <basil@gmx.ch>
+ *
+ *	This library is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU Lesser General Public
+ *	License version 2.1 as published by the Free Software Foundation.
+ *	
+ *	This library is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *	Lesser General Public License for more details.
+ *	
+ *	You should have received a copy of the GNU Lesser General Public
+ *	License along with this library; if not, write to the Free Software
+ *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+/*!	\file doc/file_format.dox
+	\brief Documentation
+	\version 0.1
+	\date 11.6.2003
+
+	Contains the doxygen documentation code to generate the libx_core 
+	documentation mainpage.
+*/
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+/*!	
+	\page libx_core__xfile_format .x File Format
+
+	\section libx_core__xfile_format__intro Introduction
+	
+		Microsoft provides a short description of the .x file format within
+		their DirectX documentation. This documentation can be found at:
+		http://msdn.microsoft.com/en-us/library/bb173014(VS.85).aspx.
+		The intent of this page is to provide a more acurate and comprehensive
+		documentation than the one Microsoft provides.
+		
+	\section libx_core__xfile_format__file_structure File Structure
+	
+		A .x file is always structured in the same way. The actual content
+		may be encoded either in text or in binary format and it may or may
+		not be compressed. But independent of the actual encoding the
+		file structure is always the same. Therefore LibX Core deploys different
+		scanners to read files in binary or text format. The analysis and convertion
+		into the internal representation is always done using the same code.
+		
+		\subsection libx_core__xfile_format__file_structure__header File Header
+
+			The header is independant of the actual file encoding. It has always the
+			same format. The header consists always of four groups characters. They are:
+			
+				<table>
+					<tr>
+						<td>Group Number</td>
+						<td>Description</td>
+						<td>Required</td>
+						<td>Size</td>
+						<td>Value</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Magic Number</td>
+						<td>Yes</td>
+						<td>4 Characters/Bytes</td>
+						<td>'xof '</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>Version Number</td>
+						<td>Yes</td>
+						<td>4 Characters/Bytes</td>
+						<td>
+							2 Characters Major Version, 2 Characters Minor Version. E.g. 0303 for
+							Major version 3 and Minor version 3.
+						</td>
+					</tr>					
+					<tr>
+						<td>3</td>
+						<td>Format Type</td>
+						<td>Yes</td>
+						<td>4 Characters/Bytes</td>
+						<td>
+							- 'bin ': Binary file
+							- 'txt ': Text file
+							- 'tzip': MSZip compressed text file
+							- 'bzip': MSZip compressed binary file
+							
+							We never encountered compressed files. Therefore either they are
+							quite rare or Microsoft actually never implemented the compression
+							feature. LibX currently does not support compressed files.
+						</td>
+					</tr>					
+					<tr>
+						<td>4</td>
+						<td>Float Size</td>
+						<td>Yes</td>
+						<td>4 Characters/Bytes</td>
+						<td>
+							- '0064': 64-bit floats
+							- '0032': 32-bit floats
+						</td>
+					</tr>					
+				</table>
+				
+			Based on the header the contents must be read differently. It decides:
+				- If the content is in binary or text encoding
+				- If the content is in compressed form
+				- If the file contains doubles or floats. The binary reader depends
+					on this knowledge whenever it has to read floating point data.
+					
+		\subsection libx_core__xfile_format__file_structure__format File Format
+		
+			A .x file consists of two parts:
+				- A number of template definitions. Templates define the format of
+				  data objects contained within the second part of the file. Note
+				  that for common templates the template definition does not have to
+				  be included. Template definitions are only needed for custom 
+				  templates not defined by Microsoft but the client code (and/or
+				  exporter used).
+				- A number of data objects. Data objects transport model data and
+				  have to be in the format defined by their respective templates.
+				  
+			Templates and data objects are represented using a stream of tokens. 
+			
+			\subsubsection libx_core__xfile_format__file_structure__format__tokens Tokens
+
+				The content of a .x File consists of a stream of tokens. An example for
+				a part of such a token stream is:
+				
+\verbatim
+	TOKEN_NAME(3, 'R', 'G', 'B'),
+	TOKEN_NAME(4, 'b', 'l', 'u', 'e'),
+	TOKEN_OBRACE,
+	TOKEN_FLOAT_LIST(3, 0.0, 0.0, 1.0),
+	TOKEN_CBRACE
+\endverbatim
+				
+				Within the Microsoft documentation tokens are also separated into two groups.
+				So called record-bearing tokens and standalone tokens. 
+				
+				Record-bearing tokens are tokens with some content. They may contain e.g. a string,
+				a number, a list of numbers, etc. The example above notes the content of
+				those tokens using parenthesis. Record-bearing tokens are:
+					- TOKEN_NAME
+					- TOKEN_STRING
+					- TOKEN_INTEGER
+					- TOKEN_GUID
+					- TOKEN_INTEGER_LIST
+					- TOKEN_FLOAT_LIST
+				
+				Standalone tokens are used to structure a .x file. Usually they represent
+				one keyword of the text representation. They do not contain any content.
+					- TOKEN_OBRACE
+					- TOKEN_CBRACE
+					- TOKEN_OPAREN
+					- TOKEN_CPAREN
+					- TOKEN_OBRACKET
+					- TOKEN_CBRACKET
+					- TOKEN_OANGLE
+					- TOKEN_CANGLE
+					- TOKEN_DOT
+					- TOKEN_COMMA
+					- TOKEN_SEMICOLON
+					- TOKEN_TEMPLATE
+					- TOKEN_WORD
+					- TOKEN_DWORD
+					- TOKEN_FLOAT
+					- TOKEN_DOUBLE
+					- TOKEN_CHAR
+					- TOKEN_UCHAR
+					- TOKEN_SWORD
+					- TOKEN_SDWORD
+					- TOKEN_VOID
+					- TOKEN_LPSTR
+					- TOKEN_UNICODE
+					- TOKEN_CSTRING
+					- TOKEN_ARRAY
+					
+				Within this documentation we will use those upper-case names whenever we reference
+				one of these tokens.
+				
+			\subsubsection libx_core__xfile_format__file_structure__format__templates Template Definitions
+			
+				The template section of a .x file contains any number of template definitions until
+				the first data object occurs. A template definition looks normally like:
+				
+\verbatim
+	TOKEN_TEMPLATE TOKEN_NAME TOKEN_OBRACE TOKEN_GUID
+		[member list]
+		[TOKEN_OBRACKET optional member list TOKEN_CBRACKET]
+	TOKEN_CBRACE
+\endverbatim
+				
+				It can thus be identified using it's unique name or GUID. A template may
+				also never be empty. Thus it must always contain the template member list or
+				the optional member list or both. For a complete reference please have a look
+				at Microsoft's grammar defining template definitions. 
+				
+				Members may be:
+				
+				\paragraph libx_core__xfile_format__file_structure__format__templates__a Primitive Member
+				\paragraph libx_core__xfile_format__file_structure__format__templates__b Array Member
+				\paragraph libx_core__xfile_format__file_structure__format__templates__c Template Member
+				
+				Optional members may be:
+				
+				\paragraph libx_core__xfile_format__file_structure__format__templates__d List of optional Templates
+				\paragraph libx_core__xfile_format__file_structure__format__templates__e Ellipsis
+*/
+/*
+
+Copied from microsoft documentation pages.
+
+Binary Encoding
+---------------
+
+This section details the binary version of the DirectX (.x) file format as introduced
+with the release of DirectX 3.0. 
+
+The binary format is a tokenized representation of the text format. Tokens can be stand-alone
+or accompanied by primitive data records. Stand-alone tokens give grammatical structure, and
+record-bearing tokens supply the necessary data.
+
+Note that all data is stored in little-endian format. A valid binary data stream consists of a
+header followed by templates and/or data objects.
+
+This section discusses the following components of the binary file format and provides an example
+template and binary data object.
+
+Header 
+Tokens 
+Token Records 
+Templates 
+Data 
+Examples 
+
+Header
+======
+
+The following definitions should be used when directly reading and writing the binary header.
+
+Note     Compressed data streams are not currently supported and are therefore not detailed here. 
+
+#define XOFFILE_FORMAT_MAGIC \
+  ((long)'x' + ((long)'o' << 8) + ((long)'f' << 16) + ((long)' ' << 24))
+
+#define XOFFILE_FORMAT_VERSION \
+  ((long)'0' + ((long)'3' << 8) + ((long)'0' << 16) + ((long)'2' << 24))
+
+#define XOFFILE_FORMAT_BINARY \
+  ((long)'b' + ((long)'i' << 8) + ((long)'n' << 16) + ((long)' ' << 24))
+
+#define XOFFILE_FORMAT_TEXT   \
+  ((long)'t' + ((long)'x' << 8) + ((long)'t' << 16) + ((long)' ' << 24))
+
+#define XOFFILE_FORMAT_COMPRESSED \
+  ((long)'c' + ((long)'m' << 8) + ((long)'p' << 16) + ((long)' ' << 24))
+
+#define XOFFILE_FORMAT_FLOAT_BITS_32 \
+  ((long)'0' + ((long)'0' << 8) + ((long)'3' << 16) + ((long)'2' << 24))
+
+#define XOFFILE_FORMAT_FLOAT_BITS_64 \
+  ((long)'0' + ((long)'0' << 8) + ((long)'6' << 16) + ((long)'4' << 24))
+
+Tokens
+======
+
+Tokens are written as little-endian WORDs. The following list of token values
+is divided into record-bearing and stand-alone tokens.
+
+The record-bearing tokens are defined as follows.
+
+#define TOKEN_NAME         1
+#define TOKEN_STRING       2
+#define TOKEN_INTEGER      3
+#define TOKEN_GUID         5
+#define TOKEN_INTEGER_LIST 6
+#define TOKEN_FLOAT_LIST   7
+The stand-alone tokens are defined as follows.
+
+#define TOKEN_OBRACE      10
+#define TOKEN_CBRACE      11
+#define TOKEN_OPAREN      12
+#define TOKEN_CPAREN      13
+#define TOKEN_OBRACKET    14
+#define TOKEN_CBRACKET    15
+#define TOKEN_OANGLE      16
+#define TOKEN_CANGLE      17
+#define TOKEN_DOT         18
+#define TOKEN_COMMA       19
+#define TOKEN_SEMICOLON   20
+#define TOKEN_TEMPLATE    31
+#define TOKEN_WORD        40
+#define TOKEN_DWORD       41
+#define TOKEN_FLOAT       42
+#define TOKEN_DOUBLE      43
+#define TOKEN_CHAR        44
+#define TOKEN_UCHAR       45
+#define TOKEN_SWORD       46
+#define TOKEN_SDWORD      47
+#define TOKEN_VOID        48
+#define TOKEN_LPSTR       49
+#define TOKEN_UNICODE     50
+#define TOKEN_CSTRING     51
+#define TOKEN_ARRAY       52
+
+Token Records
+=============
+
+This section describes the format of the records for each of the record-bearing tokens.
+Information is divided into the following sections.
+
+TOKEN_NAME 
+TOKEN_STRING 
+TOKEN_INTEGER 
+TOKEN_GUID 
+TOKEN_INTEGER_LIST 
+TOKEN_FLOAT_LIST 
+TOKEN_NAME
+A variable-length record. The token is followed by a count value that specifies the
+number of bytes that follow in the name field. An ASCII name of length count completes
+the record.
+
+Field Type Size (bytes) Contents 
+token WORD 2 token_name 
+count DWORD 4 Length of name field, in bytes 
+name BYTE array  count ASCII name 
+
+TOKEN_STRING
+A variable-length record. The token is followed by a count value that specifies the number
+of bytes that follow in the string field. An ASCII string of length count continues
+the record, which is completed by a terminating token. The choice of terminator is
+determined by syntax issues discussed elsewhere.
+
+Field Type Size (bytes)  Contents 
+token WORD 2 token_string 
+count DWORD 4 Length of string field in bytes 
+strinG BYTE array count ASCII string  
+terminator  DWORD 4 tOKEN_SEMICOLON or TOKEN_COMMA 
+
+TOKEN_INTEGER
+A fixed length record. The token is followed by the integer value required.
+
+Field Type Size (bytes) Contents 
+token WORD 2 tOKEN_INTEGER 
+valuE DWORD 4 Single integer 
+
+TOKEN_GUID
+A fixed-length record. The token is followed by the four data fields as defined by
+the OSF DCE standard.
+
+Field Type Size (bytes) Contents 
+token WORD 2 tOKEN_GUID 
+Data1 DWORD 4 UUID data field 1 
+Data2 WORD 2 UUID data field 2 
+Data3 WORD 2 UUID data field 3 
+Data4 BYTE array 8 UUID data field 4 
+
+TOKEN_INTEGER_LIST
+A variable-length record. The token is followed by a count value that specifies the
+number of integers that follow in the list field. For efficiency, consecutive integer
+lists should be compounded into a single list.
+
+Field Type Size (bytes) Contents 
+token WORD 2 tOKEN_INTEGER_LISt 
+count DWORD 4 Number of integers in list field 
+list DWORD 4 x count Integer list  
+
+TOKEN_FLOAT_LIST
+A variable-length record. The token is followed by a count value that specifies the
+number of floats or doubles that follow in the list field. The size of the floating
+point value (float or double) is determined by the value of float sizespecified in
+the file header. For efficiency, consecutive TOKEN_FLOAT_LISTs should be compounded
+into a single list.
+
+Field Type Size (bytes) Contents 
+token WORD 2 tOKEN_FLOAT_LISt 
+count DWORD 4 Number of floats or doubles in list field  
+list float/double array 4 or 8 x count Float or double list  
+
+Templates
+=========
+A template has the following syntax definition.
+
+template              : TOKEN_TEMPLATE name TOKEN_OBRACE
+                            class_id
+                            template_parts
+                            TOKEN_CBRACE
+
+template_parts        : template_members_part TOKEN_OBRACKET
+                        template_option_info
+                        TOKEN_CBRACKET
+                      | template_members_list
+
+template_members_part : /* Empty */
+                      | template_members_list
+
+template_option_info  : ellipsis
+                      | template_option_list
+
+template_members_list :    template_members
+                      | template_members_list template_members
+
+template_members      : primitive
+                      | array
+                      | template_reference
+
+primitive             : primitive_type optional_name TOKEN_SEMICOLON
+
+array                 : TOKEN_ARRAY array_data_type name dimension_list
+                        TOKEN_SEMICOLON
+
+template_reference    : name optional_name YT_SEMICOLON
+
+primitive_type        : TOKEN_WORD
+                      | TOKEN_DWORD
+                      | TOKEN_FLOAT
+                      | TOKEN_DOUBLE
+                      | TOKEN_CHAR
+                      | TOKEN_UCHAR
+                      | TOKEN_SWORD
+                      | TOKEN_SDWORD
+                      | TOKEN_LPSTR
+                      | TOKEN_UNICODE
+                      | TOKEN_CSTRING
+
+array_data_type       : primitive_type
+                      | name
+
+dimension_list        : dimension
+                      | dimension_list dimension
+
+dimension             : TOKEN_OBRACKET dimension_size TOKEN_CBRACKET
+
+dimension_size        : TOKEN_INTEGER
+                      | name
+
+template_option_list  : template_option_part
+                      | template_option_list template_option_part
+
+template_option_part  : name optional_class_id
+
+name                  : TOKEN_NAME
+
+optional_name         : /* Empty */
+                      | name
+
+class_id              : TOKEN_GUID
+
+optional_class_id     : /* Empty */
+                      | class_id
+
+ellipsis              : TOKEN_DOT TOKEN_DOT TOKEN_DOT
+
+Data
+====
+A data object has the following syntax definition.
+
+object                : identifier optional_name TOKEN_OBRACE
+                            optional_class_id
+                            data_parts_list
+                            TOKEN_CBRACE
+
+data_parts_list       : data_part
+                      | data_parts_list data_part
+
+data_part             : data_reference
+                      | object
+                      | number_list
+                      | float_list
+                      | string_list
+
+number_list           : TOKEN_INTEGER_LIST
+
+float_list            : TOKEN_FLOAT_LIST
+
+string_list           : string_list_1 list_separator
+
+string_list_1         : string
+                      | string_list_1 list_separator string
+
+list_separator        : comma
+                      | semicolon
+
+string                : token_string
+
+identifier            : name
+                      | primitive_type
+
+data_reference        : TOKEN_OBRACE name optional_class_id TOKEN_CBRACE
+Note that in number_list and float_list data in binary files, TOKEN_COMMA and TOKEN_SEMICOLON are not used. The comma and semicolon are used in string_list data. Also note that you can only use data_reference for optional data members.
+
+Examples
+========
+
+Two example binary template definitions and an example of a binary data object follow.
+
+Note     Data is stored in little-endian format, which is not shown in these examples. 
+
+The closed template RGB is identified by the UUID {55b6d780-37ec-11d0-ab39-0020af71e433} and has three members - r, g, and b - each of type float.
+
+TOKEN_TEMPLATE, TOKEN_NAME, 3, 'R', 'G', 'B', TOKEN_OBRACE,
+TOKEN_GUID, 55b6d780, 37ec, 11d0, ab, 39, 00, 20, af, 71, e4, 33,
+TOKEN_FLOAT, TOKEN_NAME, 1, 'r', TOKEN_SEMICOLON,
+TOKEN_FLOAT, TOKEN_NAME, 1, 'g', TOKEN_SEMICOLON,
+TOKEN_FLOAT, TOKEN_NAME, 1, 'b', TOKEN_SEMICOLON,
+TOKEN_CBRACE
+The closed template Matrix4x4 is identified by the UUID {55b6d781-37ec-11d0-ab39-0020af71e433} and has one member - a two-dimensional array named matrix - of type float.
+
+TOKEN_TEMPLATE, TOKEN_NAME, 9, 'M', 'a', 't', 'r', 'i', 'x', '4', 'x', '4', TOKEN_OBRACE,
+TOKEN_GUID, 55b6d781, 37ec, 11d0, ab, 39, 00, 20, af, 71, e4, 33,
+TOKEN_ARRAY, TOKEN_FLOAT, TOKEN_NAME, 6, 'm', 'a', 't', 'r', 'i', 'x',
+TOKEN_OBRACKET, TOKEN_INTEGER, 4, TOKEN_CBRACKET,
+TOKEN_OBRACKET, TOKEN_INTEGER, 4, TOKEN_CBRACKET,
+TOKEN_CBRACE
+The binary data object that follows shows an instance of the RGB template defined earlier. The example object is named blue, and its three members - r, g, and b - have the values 0.0, 0.0, and 1.0, respectively.
+
+TOKEN_NAME, 3, 'R', 'G', 'B', TOKEN_NAME, 4, 'b', 'l', 'u', 'e', TOKEN_OBRACE,
+TOKEN_FLOAT_LIST, 3, 0.0, 0.0, 1.0, TOKEN_CBRACE
+
+
+
+Text Encoding
+-------------
+
+The DirectX .x file format is not specific to any application. It uses templates that
+don't depend on how the file is used. This allows the .x file format to be used by any
+client application.
+
+This following sections deal with the content and syntax of the file format, which uses
+the .x extension in the DirectX SDK.
+
+Data
+====
+
+Data objects contain the actual data or a reference to that data. Each data object has a
+corresponding template that specifies the data type. The following sections discuss the
+form and parts of data objects.
+
+Form, Identifier, and Name
+Data objects have the following form.
+
+<Identifier> [name] { [<UUID>]
+	<member 1>;
+...
+	<member n>;
+}
+The identifier is compulsory and must match a previously defined data type or primitive.
+However, the name is optional.
+
+Data Members
+Data members can be one of the following: data object, data reference, integer list,
+float list, or string list.
+
+A data object is a nested data object. This enables the hierarchical nature of the file format
+to be expressed. The types of nested data objects allowed in the hierarchy may be restricted.
+
+A data reference is a reference to a previously encountered data object as shown
+in the following example.
+
+{
+  name |
+  UUID |
+  name UUID
+}
+An integer list is a semicolon-separated list of integers, as shown in the following example.
+
+1; 2; 3;
+A float list is a semicolon-separated list of floats, as shown in the following example.
+
+1.0; 2.0; 3.0;
+A string list is a semicolon-separated list of strings, as shown in the following example.
+
+"Moose"; "Goats"; "Sheep";
+
+Reserved Words, Header, and Comments
+====================================
+
+The table below shows which words are reserved and must not be used.
+
+ARRAY DWORD UCHAR 
+BINARY FLOAT ULONGLONG 
+BINARY_RESOURCE SDWORD UNICODE 
+CHAR STRING WORD 
+CSTRING SWORD  
+DOUBLE TEMPLATE  
+
+The variable-length header is compulsory and must be at the beginning of the data stream.
+The header contains the following data.
+
+Type 			Required 		Size (in bytes) 	Value 			Description 
+Magic Number 	x 				4 					xof  
+Version Number 	x 				2 					03 				Major version 3 
+  													03 				Minor version 3 
+Format Type 	x 				4 					txt 			Text File 
+  													bin 			Binary file 
+  													tzip 			MSZip compressed text file 
+  													bzip 			MSZip compressed binary file 
+Float Size 		x 				4					0064 			64-bit floats 
+				 				4					0032 			32-bit floats 
+
+The values in the table are delimited by quotes to call attention to the number of characters
+in each value. Those with 4 bytes contain four characters, those with 2 bytes contain
+two characters.
+
+Comments are applicable only in text files. Comments can occur anywhere in the data stream.
+A comment begins with either C++ style double-slashes (//), or a pound sign (#). The comment
+runs to the next new line. The following example shows valid comments.
+
+#  This is a comment.
+// This is another comment.
+
+Templates
+=========
+
+Templates define how the data stream is interpreted - the data is modulated by the template
+definition. This section discusses the following aspects of a template and provides an
+example template.
+
+There is one special template - the header template. It is recommended that each application
+define a header template and use it to define application-specific information, such as
+version information. If present, this header is read by the .x file format API. If a flags
+member is available, it is used to determine how the following data is interpreted.
+The flags member, if defined, should be a DWORD. One bit is currently defined - bit 0.
+If this bit is clear, the following data in the file is binary. If set, the following
+data is text. You can use multiple header data objects to switch between binary and text
+within the file.
+
+Template Form, Name, and UUID
+A template has the following form.
+
+template <template-name> {
+<UUID>
+	<member 1>;
+...
+	<member n>;
+[restrictions]
+}
+The template name is an alphanumeric name that can include the underscore character (_).
+It must not begin with a digit. The UUID is a universally unique identifier formatted to
+the Open Software Foundation's Distributed Computing Environment standard and enclosed by
+angle brackets (< >). For example: <3D82AB43-62DA-11cf-AB39-0020AF71E433>.
+
+Template Members
+Template members consist of a named data type followed by an optional name or an array
+of a named data type. Valid primitive data types are defined in the following table.
+
+Type Size 
+WORD 16 bits 
+DWORD 32 bits 
+FLOAT IEEE float 
+DOUBLE 64 bits 
+CHAR 8 bits 
+UCHAR 8 bits 
+BYTE 8 bits 
+STRING NULL terminated string 
+CSTRING Formatted C string (not supported) 
+UNICODE Unicode string (not supported) 
+
+Additional data types defined by templates encountered earlier in the data stream can
+also be referenced within a template definition. No forward references are allowed.
+
+Any valid data type can be expressed as an array in the template definition. The basic
+syntax is shown in the following example.
+
+array <data-type> <name>[<dimension-size>];
+<dimension-size> can either be an integer or a named reference to another template
+member whose value is then substituted. Arrays can be n-dimensional, where n is determined
+by the number of paired square brackets trailing the statement, as in the following example.
+
+array DWORD FixedHerd[24];
+array DWORD Herd[nCows];
+array FLOAT Matrix4x4[4][4];
+Template Restrictions
+Templates can be open, closed, or restricted. These restrictions determine which data
+types can appear in the immediate hierarchy of a data object defined by the template.
+An open template has no restrictions, a closed template rejects all data types, and a
+restricted template allows a named list of data types.
+
+The syntax for indicating an open template is three periods enclosed by square brackets.
+
+[ ... ]
+A comma-separated list of named data types followed optionally by their UUIDs enclosed by
+square brackets indicates a restricted template.
+
+[ { data-type [ UUID ] , } ... ]
+The absence of either of the above indicates a closed template.
+
+Template Example
+The following shows an example template.
+
+template Mesh {
+<3D82AB44-62DA-11cf-AB39-0020AF71E433>
+DWORD nVertices;
+array Vector vertices[nVertices];
+DWORD nFaces;
+array MeshFace faces[nFaces];
+ [ ... ]                // An open template
+}
+template Vector {
+<3D82AB5E-62DA-11cf-AB39-0020AF71E433>
+FLOAT x;
+FLOAT y;
+FLOAT z;
+}                        // A closed template
+template FileSystem {
+<UUID>
+STRING name;
+[ Directory <UUID>, File <UUID> ]    // A restricted template
+}
+
+Use of Commas and Semicolons
+============================
+
+Using commas and semicolons can be the most complex syntax issue in the file format,
+and this usage is very strict. Commas are used to separate array members; semicolons
+terminate each data item. 
+
+For example, if a template is defined in the following manner:
+
+template mytemp {
+DWORD myvar;
+}
+Then an instance of this template looks like the following:
+
+mytemp dataTemp {
+1;
+}
+If a template containing another template is defined in the following manner;
+
+template mytemp {
+DWORD myvar;
+DWORD myvar2;
+}
+template container {
+FLOAT aFloat;
+mytemp aTemp;
+}
+Then an instance of this template looks like the following:
+
+container dataContainer {
+1.1;
+2; 
+3;;
+}
+Note that the second line that represents the mytemp inside container has two
+semicolons at the end of the line. The first semicolon indicates the end of the
+data item, aTemp (inside container), and the second semicolon indicates the end
+of the container.
+
+If an array is defined in the following manner:
+
+Template mytemp {
+
+array DWORD myvar[3];
+
+}
+Then an instance of this looks like the following:
+
+mytemp aTemp {
+1, 2, 3;
+}
+In the array example, there is no need for the data items to be separated by semicolons
+because they are delineated by commas. The semicolon at the end marks the end of the array.
+
+Consider a template that contains an array of data items defined by a template.
+
+template mytemp {
+DWORD myvar;
+DWORD myvar2;
+}
+template container {
+DWORD count;
+array mytemp tempArray[count];
+}
+An instance of this would look like the following example.
+
+container aContainer {
+3;
+1;2;,3;4;,5;6;;
+}
+
+*/

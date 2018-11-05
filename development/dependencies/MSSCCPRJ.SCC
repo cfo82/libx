@@ -1,0 +1,45 @@
+SCC = This is a source code control file
+
+[libvorbis.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[dependencies.sln]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[libpng.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[alut.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[ALc.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[fftw.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[zlib.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[OpenAL32.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[libogg.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[ALh.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project
+
+[ALu.vcproj]
+SCC_Aux_Path = "P4SCC#rimproject.dyndns.org:1666##Christian_Oberholzer#CA15F7B979EC170E617025EEBD213F97#Christian_Oberholzer_vista"
+SCC_Project_Name = Perforce Project

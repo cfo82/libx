@@ -1,0 +1,67 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test.vcproj", "{620ECE97-4815-43EF-AB73-609CEE70CF21}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7788076-58A9-4FC6-A11E-863B329BAA98} = {F7788076-58A9-4FC6-A11E-863B329BAA98}
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC} = {D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmeshgenerator", "xmeshgenerator.vcproj", "{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7788076-58A9-4FC6-A11E-863B329BAA98} = {F7788076-58A9-4FC6-A11E-863B329BAA98}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmodellib_core", "xmodellib_core.vcproj", "{F7788076-58A9-4FC6-A11E-863B329BAA98}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xmodelviewer", "xmodelviewer.vcproj", "{1015F953-EEDA-4248-99C8-5A2006C2FB00}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7788076-58A9-4FC6-A11E-863B329BAA98} = {F7788076-58A9-4FC6-A11E-863B329BAA98}
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC} = {D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 4
+		SccProjectName0 = Perforce\u0020Project
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Perforce\u0020SCM
+		CanCheckoutShared = true
+		SolutionUniqueID = {58F80ED9-5FF8-4F24-AF01-4274AA9D6DF6}
+		SccProjectUniqueName1 = xmeshgenerator.vcproj
+		SccLocalPath1 = .
+		CanCheckoutShared = true
+		SccProjectUniqueName2 = test.vcproj
+		SccLocalPath2 = .
+		CanCheckoutShared = true
+		SccProjectUniqueName3 = xmodellib_core.vcproj
+		SccLocalPath3 = .
+		CanCheckoutShared = true
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{620ECE97-4815-43EF-AB73-609CEE70CF21}.Debug.ActiveCfg = Debug|Win32
+		{620ECE97-4815-43EF-AB73-609CEE70CF21}.Debug.Build.0 = Debug|Win32
+		{620ECE97-4815-43EF-AB73-609CEE70CF21}.Release.ActiveCfg = Release|Win32
+		{620ECE97-4815-43EF-AB73-609CEE70CF21}.Release.Build.0 = Release|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.Debug.ActiveCfg = Debug|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.Debug.Build.0 = Debug|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.Release.ActiveCfg = Release|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.Release.Build.0 = Release|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.Debug.ActiveCfg = Debug|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.Debug.Build.0 = Debug|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.Release.ActiveCfg = Release|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.Release.Build.0 = Release|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.Debug.ActiveCfg = Debug|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.Debug.Build.0 = Debug|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.Release.ActiveCfg = Release|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

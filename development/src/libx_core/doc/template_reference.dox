@@ -1,0 +1,131 @@
+//-----------------------------------------------------------------------------------------------------------
+/*
+ *	LibX - A Library to export/import .x-models
+ *
+ *	This file is
+ *		Copyright (C) 2008 Christian Oberholzer <coberholzer@gmx.ch>
+ *
+ *	It is part of LibX, which is
+ *		Copyright (C) 2008 Christian Oberholzer <coberholzer@gmx.ch>
+ *		Copyright (C) 2008 Basil Fierz <basil@gmx.ch>
+ *
+ *	This library is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU Lesser General Public
+ *	License version 2.1 as published by the Free Software Foundation.
+ *	
+ *	This library is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *	Lesser General Public License for more details.
+ *	
+ *	You should have received a copy of the GNU Lesser General Public
+ *	License along with this library; if not, write to the Free Software
+ *	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+/*!	\file doc/template_reference.dox
+	\brief Documentation
+	\version 0.1
+	\date 11.6.2003
+
+	Contains the doxygen documentation code to generate the libx_core 
+	documentation mainpage.
+*/
+//-----------------------------------------------------------------------------------------------------------
+
+//-----------------------------------------------------------------------------------------------------------
+/*!	
+	\page libx_core__template_reference Template Reference
+
+
+	This page is a basic overview over the different templates that are currently implemented 
+	in LibX Core. They are the templates documented by Microsoft. 
+
+	\section libx_core__template_reference__guid_assignments  GUID assignments
+
+		The following table shows the assignments of template name to its guid and vice versa. It is
+		ordered alphabetically by template name.
+
+		<table>
+			<tr><td>GUID</td>									<td>Template</td>					<td>Template Class</td>					</tr>
+			<tr><td>3D82AB4F-62DA-11cf-AB39-0020AF71E433</td>	<td>Animation</td>					<td>x::templates::Animation</td>			</tr>
+			<tr><td>10DD46A8-775B-11CF-8F52-0040333594A3</td>	<td>AnimationKey</td>				<td>x::templates::AnimationKey</td>			</tr>
+			<tr><td>E2BF56C0-840F-11cf-8F52-0040333594A3</td>	<td>AnimationOptions</td>			<td>x::templates::AnimationOptions</td>			</tr>
+			<tr><td>3D82AB50-62DA-11cf-AB39-0020AF71E433</td>	<td>AnimationSet</td>				<td>x::templates::AnimationSet</td>			</tr>
+			<tr><td>9E415A43-7BA6-4a73-8743-B73D47E88476</td>	<td>AnimTicksPerSecond</td>			<td>x::templates::AnimTicksPerSecond</td>		</tr>
+			<tr><td>537da6a0-ca37-11d0-941c-0080c80cfa7b</td>	<td>Boolean</td>					<td>x::templates::Boolean</td>				</tr>
+			<tr><td>4885AE63-78E8-11cf-8F52-0040333594A3</td>	<td>Boolean2d</td>					<td>x::templates::Boolean2d</td>			</tr>
+			<tr><td>D3E16E81-7835-11cf-8F52-0040333594A3</td>	<td>ColorRGB</td>					<td>x::templates::ColorRGB</td>				</tr>
+			<tr><td>35FF44E0-6C7C-11cf-8F52-0040333594A3</td>	<td>ColorRGBA</td>					<td>x::templates::ColorRGBA</td>			</tr>
+			<tr><td>7F9B00B3-F125-4890-876E-1C42BF697C4D</td>	<td>CompressedAnimationSet</td>		<td>x::templates::CompressedAnimationSet</td>		</tr>
+			<tr><td>F6F23F44-7686-11cf-8F52-0040333594A3</td>	<td>Coords2d</td>					<td>x::templates::Coords2d</td>				</tr>
+			<tr><td>BF22E553-292C-4781-9FEA-62BD554BDD93</td>	<td>DeclData</td>					<td>x::templates::DeclData</td>				</tr>
+			<tr><td>622C0ED0-956E-4da9-908A-2AF94F3CE716</td>	<td>EffectDWord</td>				<td>x::templates::EffectDWord</td>			</tr>
+			<tr><td>F1CFE2B3-0DE3-4e28-AFA1-155A750A282D</td>	<td>EffectFloats</td>				<td>x::templates::EffectFloats</td>			</tr>
+			<tr><td>E331F7E4-0559-4cc2-8E99-1CEC1657928F</td>	<td>EffectInstance</td>				<td>x::templates::EffectInstance</td>			</tr>
+			<tr><td>E13963BC-AE51-4c5d-B00F-CFA3A9D97CE5</td>	<td>EffectParamDWord</td>			<td>x::templates::EffectParamDWord</td>			</tr>
+			<tr><td>3014B9A0-62F5-478c-9B86-E4AC9F4E418B</td>	<td>EffectParamFloats</td>			<td>x::templates::EffectParamFloats</td>		</tr>
+			<tr><td>1DBC4C88-94C1-46ee-9076-2C28818C9481</td>	<td>EffectParamString</td>			<td>x::templates::EffectParamString</td>		</tr>
+			<tr><td>D55B097E-BDB6-4c52-B03D-6051C89D0E42</td>	<td>EffectString</td>				<td>x::templates::EffectString</td>			</tr>
+			<tr><td>A64C844A-E282-4756-8B80-250CDE04398C</td>	<td>FaceAdjacency</td>				<td>x::templates::FaceAdjacency</td>			</tr>
+			<tr><td>10DD46A9-775B-11cf-8F52-0040333594A3</td>	<td>FloatKeys</td>					<td>x::templates::FloatKeys</td>			</tr>
+			<tr><td>3D82AB46-62DA-11CF-AB39-0020AF71E433</td>	<td>Frame</td>						<td>x::templates::Frame</td>				</tr>
+			<tr><td>F6F23F41-7686-11cf-8F52-0040333594A3</td>	<td>FrameTransformMatrix</td>		<td>x::templates::FrameTransformMatrix</td>		</tr>
+			<tr><td>B6E70A0E-8EF9-4e83-94AD-ECC8B0C04897</td>	<td>FVFData</td>					<td>x::templates::FVFData</td>				</tr>
+			<tr><td>a42790e0-7810-11cf-8f52-0040333594a3</td>	<td>Guid</td>						<td>x::templates::Guid</td>				</tr>
+			<tr><td>1630B820-7842-11cf-8F52-0040333594A3</td>	<td>IndexedColor</td>				<td>x::templates::IndexedColor</td>			</tr>
+			<tr><td>3D82AB4D-62DA-11CF-AB39-0020AF71E433</td>	<td>Material</td>					<td>x::templates::Material</td>				</tr>
+			<tr><td>4885ae60-78e8-11cf-8f52-0040333594a3</td>	<td>MaterialWrap</td>				<td>x::templates::MaterialWrap</td>			</tr>
+			<tr><td>F6F23F45-7686-11cf-8F52-0040333594A3</td>	<td>Matrix4x4</td>					<td>x::templates::Matrix4x4</td>			</tr>
+			<tr><td>3D82AB44-62DA-11CF-AB39-0020AF71E433</td>	<td>Mesh</td>						<td>x::templates::Mesh</td>				</tr>
+			<tr><td>3D82AB5F-62DA-11cf-AB39-0020AF71E433</td>	<td>MeshFace</td>					<td>x::templates::MeshFace</td>				</tr>
+			<tr><td>ED1EC5C0-C0A8-11D0-941C-0080C80CFA7B</td>	<td>MeshFaceWraps</td>				<td>x::templates::MeshFaceWraps</td>			</tr>
+			<tr><td>F6F23F42-7686-11CF-8F52-0040333594A3</td>	<td>MeshMaterialList</td>			<td>x::templates::MeshMaterialList</td>			</tr>
+			<tr><td>F6F23F43-7686-11cf-8F52-0040333594A3</td>	<td>MeshNormals</td>				<td>x::templates::MeshNormals</td>			</tr>
+			<tr><td>F6F23F40-7686-11cf-8F52-0040333594A3</td>	<td>MeshTextureCoords</td>			<td>x::templates::MeshTextureCoords</td>		</tr>
+			<tr><td>1630B821-7842-11cf-8F52-0040333594A3</td>	<td>MeshVertexColors</td>			<td>x::templates::MeshVertexColors</td>			</tr>
+			<tr><td>A3EB5D44-FC22-429D-9AFB-3221CB9719A6</td>	<td>Patch</td>						<td>x::templates::Patch</td>				</tr>
+			<tr><td>D02C95CC-EDBA-4305-9B5D-1820D7704BBF</td>	<td>PatchMesh</td>					<td>x::templates::PatchMesh</td>			</tr>
+			<tr><td>B9EC94E1-B9A6-4251-BA18-94893F02C0EA</td>	<td>PatchMesh9</td>					<td>x::templates::PatchMesh9</td>			</tr>
+			<tr><td>917E0427-C61E-4a14-9C64-AFE65F9E9844</td>	<td>PMAttributeRange</td>			<td>x::templates::PMAttributeRange</td>			</tr>
+			<tr><td>B6C3E656-EC8B-4b92-9B62-681659522947</td>	<td>PMInfo</td>						<td>x::templates::PMInfo</td>				</tr>
+			<tr><td>574CCC14-F0B3-4333-822D-93E8A8A08E4C</td>	<td>PMVSplitInfo</td>				<td>x::templates::PMVSplitInfo</td>			</tr>
+			<tr><td>6F0D123B-BAD2-4167-A0D0-80224F25FABB</td>	<td>SkinWeights</td>				<td>x::templates::SkinWeights</td>			</tr>
+			<tr><td>A42790E1-7810-11cf-8F52-0040333594A3</td>	<td>TextureFilename</td>			<td>x::templates::TextureFilename</td>			</tr>
+			<tr><td>F406B180-7B3B-11cf-8F52-0040333594A3</td>	<td>TimedFloatKeys</td>				<td>x::templates::TimedFloatKeys</td>			</tr>
+			<tr><td>3D82AB5E-62DA-11cf-AB39-0020AF71E433</td>	<td>Vector</td>						<td>x::templates::Vector</td>				</tr>
+			<tr><td>B8D65549-D7C9-4995-89CF-53A9A8B031E3</td>	<td>VertexDuplicationIndices</td>	<td>x::templates::VertexDuplicationIndices</td>		</tr>
+			<tr><td>F752461C-1E23-48f6-B9F8-8350850F336F</td>	<td>VertexElement</td>				<td>x::templates::VertexElement</td>			</tr>
+			<tr><td>3CF169CE-FF7C-44ab-93C0-F78F62D172E2</td>	<td>XSkinMeshHeader</td>			<td>x::templates::XSkinMeshHeader</td>			</tr>
+		</table>
+
+	\section libx_core__template_reference__templates
+
+		\subsection libx_core__template_reference__templates__animation Animation
+		\subsection libx_core__template_reference__templates__animation_key AnimationKey
+		\subsection libx_core__template_reference__templates__animation_options AnimationOptions
+		\subsection libx_core__template_reference__templates__animation_set AnimationSet
+		\subsection libx_core__template_reference__templates__anim_ticks_per_second AnimTicksPerSecond
+		\subsection libx_core__template_reference__templates__boolean Boolean
+		\subsection libx_core__template_reference__templates__boolean_2d Boolean2d
+		\subsection libx_core__template_reference__templates__color_rgb ColorRGB
+		\subsection libx_core__template_reference__templates__color_rgba ColorRGBA
+		\subsection libx_core__template_reference__templates__compressed_animation_set CompressedAnimationSet
+		\subsection libx_core__template_reference__templates__coords_2d Coords2d
+		\subsection libx_core__template_reference__templates__decl_data DeclData
+		\subsection libx_core__template_reference__templates__effect_dword EffectDWord
+		\subsection libx_core__template_reference__templates__effect_floats EffectFloats
+		\subsection libx_core__template_reference__templates__effect_instance EffectInstance
+		\subsection libx_core__template_reference__templates__effect_param_dword EffectParamDWord
+		\subsection libx_core__template_reference__templates__effect_param_floats EffectParamFloats
+		\subsection libx_core__template_reference__templates__effect_param_string EffectParamString
+		\subsection libx_core__template_reference__templates__effect_string EffectString
+		\subsection libx_core__template_reference__templates__face_adjacency FaceAdjacency
+		\subsection libx_core__template_reference__templates__float_keys FloatKeys
+		\subsection libx_core__template_reference__templates__frame Frame
+		\subsection libx_core__template_reference__templates__frame_transform_matrix FrameTransformMatrix
+
+		
+*/

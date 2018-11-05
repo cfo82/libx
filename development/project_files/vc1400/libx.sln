@@ -1,0 +1,61 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libx_model", "libx_model.vcproj", "{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7788076-58A9-4FC6-A11E-863B329BAA98} = {F7788076-58A9-4FC6-A11E-863B329BAA98}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libx_core", "libx_core.vcproj", "{F7788076-58A9-4FC6-A11E-863B329BAA98}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libx_viewer", "libx_viewer.vcproj", "{1015F953-EEDA-4248-99C8-5A2006C2FB00}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7788076-58A9-4FC6-A11E-863B329BAA98} = {F7788076-58A9-4FC6-A11E-863B329BAA98}
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC} = {D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 4
+		SccProjectName0 = Perforce\u0020Project
+		SccLocalPath0 = ..\\..\\..
+		SccProvider0 = MSSCCI:Perforce\u0020SCM
+		SccProjectFilePathRelativizedFromConnection0 = development\\project_files\\vc1400\\
+		SccProjectUniqueName1 = libx_model.vcproj
+		SccLocalPath1 = ..\\..\\..
+		SccProjectFilePathRelativizedFromConnection1 = development\\project_files\\vc1400\\
+		SccProjectUniqueName2 = libx_core.vcproj
+		SccLocalPath2 = ..\\..\\..
+		SccProjectFilePathRelativizedFromConnection2 = development\\project_files\\vc1400\\
+		SccProjectUniqueName3 = libx_viewer.vcproj
+		SccLocalPath3 = ..\\..\\..
+		SccProjectFilePathRelativizedFromConnection3 = development\\project_files\\vc1400\\
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DebugUnicode|Win32 = DebugUnicode|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.Debug|Win32.Build.0 = Debug|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.DebugUnicode|Win32.ActiveCfg = DebugUnicode|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.DebugUnicode|Win32.Build.0 = DebugUnicode|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.Release|Win32.ActiveCfg = Release|Win32
+		{D2BB73D0-6BA4-4239-AC77-E6E07A7FB3DC}.Release|Win32.Build.0 = Release|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.Debug|Win32.Build.0 = Debug|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.DebugUnicode|Win32.ActiveCfg = DebugUnicode|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.DebugUnicode|Win32.Build.0 = DebugUnicode|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.Release|Win32.ActiveCfg = Release|Win32
+		{F7788076-58A9-4FC6-A11E-863B329BAA98}.Release|Win32.Build.0 = Release|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.Debug|Win32.Build.0 = Debug|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.DebugUnicode|Win32.ActiveCfg = DebugUnicode|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.DebugUnicode|Win32.Build.0 = DebugUnicode|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.Release|Win32.ActiveCfg = Release|Win32
+		{1015F953-EEDA-4248-99C8-5A2006C2FB00}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
